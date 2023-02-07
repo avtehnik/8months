@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kubectl commands helper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="kubectl commands helper generator tool kubernetes"/>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/bootstrap.min.css"/>
+  <style>
+      .pointer:after {
+          cursor: pointer;
+          content: " 📄";
+      }
+
+      .container {
+          margin-top: 100px;
+      }
+
+      #progress {
+          padding: 4px;
+          flex-direction: row;
+          display: flex;
+          clear: both;
+      }
+
+      #progress .progress-container{
+          height: 20px;
+          border: 1px solid black;
+          flex-direction: row;
+          display: flex;
+      }
+
+      #progress .payed {
+          background-color: #5cb85c;
+      }
+
+      #progress .reserved {
+          background-color: yellow;
+      }
+
+      .days{
+          width: 100%;
+      }
+
+      .days .day{
+          float: left;
+          display: inline-block;
+          border: 1px solid darkgrey;
+          border-radius: 3px;
+          width: 20px;
+          height: 20px;
+          margin: 2px;
+          padding: 0;
+      }
+      .days .day.x{
+          background-color: green;
+      }
+      .days .day.o{
+          background-color: lightgray;
+      }
+
+
+  </style>
+
+</head>
+<body>
+<div id="vue-app" class="container">
+
+
+  <div class="days">
+    <div class="day" :class="day" v-for="day in days"></div>
+  </div>
+
+  <div id="progress">
+    <div class="progress-container" :style="{ width: totalC + 'px' }">
+      <div class="payed" :style="{ width: payedC + 'px' }"></div>
+      <div class="reserved" :style="{ width: reservedC + 'px' }"></div>
+    </div>
+    {{total}}
+  </div>
+  <br>
+  <textarea v-model="payed" rows="10" cols="20"></textarea>
+  <textarea v-model="reserved" rows="10" cols="20"></textarea>
+</div>
+
+<script src="js/vue.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
