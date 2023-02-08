@@ -69,12 +69,14 @@ new Vue({
         this.days = a;
         let total = date2.getTime() - date1.getTime();
 
-        setInterval(()=>{
+        let calcP = ()=>{
             let current = new Date();
-
             let target =  current.getTime() - date1.getTime();
             this.progress = ((target/total) * 100).toFixed(5);
-        },1000)
+        }
+
+        calcP();
+        setInterval(calcP,1000)
     },
     computed: {
         total: function() {
