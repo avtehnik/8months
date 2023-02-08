@@ -21,6 +21,7 @@ new Vue({
         payed: "",
         reserved: "",
         days: [],
+        progress: 0
     },
     methods: {
         getPayed: function() {
@@ -48,10 +49,9 @@ new Vue({
         this.payed = window.localStorage.hasOwnProperty('payed') ? window.localStorage['payed'] : "";
 
 
-
+        let current = new Date();
         var date1 = new Date("02/07/2023");
         var date2 = new Date("11/01/2023");
-        var current = new Date();
 
         var totalDifference_In_Time = date2.getTime() - current.getTime();
         var totalDifference_In_Days =  Math.floor(totalDifference_In_Time / (1000 * 3600 * 24));
@@ -67,7 +67,14 @@ new Vue({
 
         console.log(a);
         this.days = a;
+        let total = date2.getTime() - date1.getTime();
 
+        setInterval(()=>{
+            let current = new Date();
+
+            let target =  current.getTime() - date1.getTime();
+            this.progress = ((target/total) * 100).toFixed(5);
+        },1000)
     },
     computed: {
         total: function() {
