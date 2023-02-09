@@ -49,28 +49,27 @@ new Vue({
         this.payed = window.localStorage.hasOwnProperty('payed') ? window.localStorage['payed'] : "";
 
 
-        let current = new Date();
         var date1 = new Date("02/07/2023");
         var date2 = new Date("11/01/2023");
 
-        var totalDifference_In_Time = date2.getTime() - current.getTime();
-        var totalDifference_In_Days =  Math.floor(totalDifference_In_Time / (1000 * 3600 * 24));
-        var difference_In_Time = current.getTime() - date1.getTime();
-        var difference_In_Days = Math.floor(difference_In_Time / (1000 * 3600 * 24));
-
-        //To display the final no. of days (result)
-        console.log(totalDifference_In_Days, difference_In_Days);
-
-        let a = new Array(difference_In_Days + totalDifference_In_Days-1);
-        a.fill("x",0, difference_In_Days )
-        a.fill("o", difference_In_Days, totalDifference_In_Days )
-
-        console.log(a);
-        this.days = a;
-        let total = date2.getTime() - date1.getTime();
-
         let calcP = ()=>{
             let current = new Date();
+            var totalDifference_In_Time = date2.getTime() - current.getTime();
+            var totalDifference_In_Days =  Math.floor(totalDifference_In_Time / (1000 * 3600 * 24));
+            var difference_In_Time = current.getTime() - date1.getTime();
+            var difference_In_Days = Math.floor(difference_In_Time / (1000 * 3600 * 24));
+
+            //To display the final no. of days (result)
+            console.log(totalDifference_In_Days, difference_In_Days);
+
+
+            let a = new Array(difference_In_Days + totalDifference_In_Days);
+            a.fill("x",0, difference_In_Days )
+            a.fill("o", difference_In_Days, totalDifference_In_Days + difference_In_Days )
+
+            this.days = a;
+            let total = date2.getTime() - date1.getTime();
+
             let target =  current.getTime() - date1.getTime();
             this.progress = ((target/total) * 100).toFixed(5);
         }
