@@ -21,6 +21,7 @@ new Vue({
         payed: "",
         reserved: "",
         days: [],
+        daysLast: 0,
         progress: 0
     },
     methods: {
@@ -61,7 +62,7 @@ new Vue({
 
             //To display the final no. of days (result)
             console.log(totalDifference_In_Days, difference_In_Days);
-
+            this.daysLast = totalDifference_In_Days
 
             let a = new Array(difference_In_Days + totalDifference_In_Days);
             a.fill("x",0, difference_In_Days )
