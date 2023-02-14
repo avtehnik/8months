@@ -91,6 +91,7 @@
 <body>
 <div id="vue-app" class="container">
   <h1>8 months, {{daysLast}} {{progress}}</h1>
+  <progress id="file" max="100" :value="progress" style="width:100%;  max-width: 780px"> 70% </progress>
 
   <div class="days">
     <div class="day" :class="day" v-for="day in days"></div>
@@ -104,6 +105,7 @@
     {{total}}
   </div>
   <br>
+
   <textarea v-model="payed" rows="10" cols="20"></textarea>
   <textarea v-model="reserved" rows="10" cols="20"></textarea>
 </div>
