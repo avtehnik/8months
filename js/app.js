@@ -103,5 +103,10 @@ new Vue({
             let p = this.precent(this.target, this.target);
             return p * 5;
         },
+        sumAmount: function(){
+            let p = this.getPayed();
+            let r = this.getReserved();
+            return p + r;
+        }
     }
 });
