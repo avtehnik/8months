@@ -83,20 +83,21 @@ new Vue({
             let p = this.getPayed();
             let r = this.getReserved();
             console.log(p,r);
+            console.log(this.precent(p , this.target),this.precent( r, this.target));
             return this.precent(p + r, this.target)+"%";
         },
         payedC: function() {
             window.localStorage['payed'] = this.payed;
             let a = this.getPayed()
             let p = this.precent(a, this.target);
-            return p * 5;
+            return { px: p * 5, p};
         },
         reservedC: function() {
             window.localStorage['reserved'] = this.reserved;
             let a = this.getReserved();
 
             let p = this.precent(a, this.target);
-            return p * 5;
+            return { px: p * 5, p};
         },
         totalC: function() {
             // this.target

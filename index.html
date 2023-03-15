@@ -100,8 +100,8 @@
 
   <div id="progress">
     <div class="progress-container" :style="{ width: totalC + 'px' }">
-      <div class="payed" :style="{ width: payedC + 'px' }"></div>
-      <div class="reserved" :style="{ width: reservedC + 'px' }"></div>
+      <div class="payed" :style="{ width: payedC.px + 'px' }">{{payedC.p}}</div>
+      <div class="reserved" :style="{ width: reservedC.px + 'px' }">{{reservedC.p}}</div>
     </div>
     {{total}}
   </div>
