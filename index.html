@@ -105,7 +105,7 @@
     <div class="progress-container" :style="{ width: totalC + 'px' }">
       <div class="payed" :style="{ width: payedC.px + 'px' }">{{payedC.p}}</div>
       <div class="reserved" :style="{ width: reservedC.px + 'px' }">{{reservedC.p}}</div>
-      <div class="rest" :style="{ width: (totalC - reservedC.px - payedC.px) + 'px' }">{{100 - total}}</div>
+      <div class="rest" :style="{ width: (totalC - reservedC.px - payedC.px) + 'px' }">{{parseFloat(100 - total).toFixed(1)}}</div>
     </div>
     {{total}}
   </div>
