@@ -37,6 +37,9 @@
       #progress .reserved {
           background-color: yellow;
       }
+      #progress .rest {
+          background-color: rgba(0, 72, 255, 0.66);
+      }
 
       .days{
           width: 100%;
@@ -102,6 +105,7 @@
     <div class="progress-container" :style="{ width: totalC + 'px' }">
       <div class="payed" :style="{ width: payedC.px + 'px' }">{{payedC.p}}</div>
       <div class="reserved" :style="{ width: reservedC.px + 'px' }">{{reservedC.p}}</div>
+      <div class="rest" :style="{ width: (totalC - reservedC.px - payedC.px) + 'px' }">{{100 - total}}</div>
     </div>
     {{total}}
   </div>

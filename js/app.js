@@ -84,7 +84,7 @@ new Vue({
             let r = this.getReserved();
             console.log(p,r);
             console.log(this.precent(p , this.target),this.precent( r, this.target));
-            return this.precent(p + r, this.target)+"%";
+            return this.precent(p + r, this.target);
         },
         payedC: function() {
             window.localStorage['payed'] = this.payed;
