@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>8 months</title>
+  <title>8 weeks</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -62,28 +62,29 @@
           background-color: lightgray;
       }
 
-      .days .day:nth-child(84) {
+      .days .day:nth-child(7) {
           background-color: #5bc0de;
       }
-      .days .day:nth-child(207) {
+      .days .day:nth-child(14) {
           background-color: #5bc0de;
       }
 
-      .days .day:nth-child(22) {
+      .days .day:nth-child(21) {
           background-color: #2e6da4;
       }
-      .days .day:nth-child(53) {
-          background-color: #2e6da4;
+    
+      .days .day:nth-child(36) {
+          background-color: #5bc0de;
       }
-      .days .day:nth-child(114) {
-          background-color: #2e6da4;
+.days .day:nth-child(43) {
+          background-color: #5bc0de;
+}
+.days .day:nth-child(50) {
+          background-color: #5bc0de;
       }
-      .days .day:nth-child(144) {
-          background-color: #2e6da4;
-      }
-      .days .day:nth-child(175) {
-          background-color: #2e6da4;
-      }
+    
+
+    
 
       .container {
           max-width: 780px;
@@ -94,7 +95,7 @@
 </head>
 <body>
 <div id="vue-app" class="container">
-  <h1>8 months, {{daysLast}} {{progress}}</h1>
+  <h1>8 weeks, {{daysLast}} {{progress}}</h1>
   <progress id="file" max="100" :value="progress" style="width:100%;  max-width: 780px"> 70% </progress>
 
   <div class="days">
