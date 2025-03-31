@@ -50,8 +50,8 @@ new Vue({
         this.payed = window.localStorage.hasOwnProperty('payed') ? window.localStorage['payed'] : "";
 
 
-        var date1 = new Date("02/07/2023");
-        var date2 = new Date("11/01/2023");
+        var date1 = new Date("21/03/2025");
+        var date2 = new Date("21/06/2025");
 
         let calcP = ()=>{
             let current = new Date();
