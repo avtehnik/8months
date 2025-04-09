@@ -1,123 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>8 weeks</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="css/bootstrap.min.css"/>
-  <style>
-      .pointer:after {
-          cursor: pointer;
-          content: " 📄";
-      }
+    <title>8 weeks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <style>
+        .pointer:after {
+            cursor: pointer;
+            content: " 📄";
+        }
 
-      .container {
-          margin-top: 100px;
-      }
+        .container {
+            margin-top: 100px;
+        }
 
-      #progress {
-          padding: 4px;
-          flex-direction: row;
-          display: flex;
-          clear: both;
-      }
+        #progress {
+            padding: 4px;
+            flex-direction: row;
+            display: flex;
+            clear: both;
+        }
 
-      #progress .progress-container{
-          height: 20px;
-          border: 1px solid black;
-          flex-direction: row;
-          display: flex;
-      }
+        #progress .progress-container {
+            height: 20px;
+            border: 1px solid black;
+            flex-direction: row;
+            display: flex;
+        }
 
-      #progress .payed {
-          background-color: #5cb85c;
-      }
+        #progress .payed {
+            background-color: #5cb85c;
+        }
 
-      #progress .reserved {
-          background-color: yellow;
-      }
-      #progress .rest {
-          background-color: rgba(0, 72, 255, 0.66);
-      }
+        #progress .reserved {
+            background-color: yellow;
+        }
 
-      .days{
-          width: 100%;
-      }
+        #progress .rest {
+            background-color: rgba(0, 72, 255, 0.66);
+        }
 
-      .days .day{
-          float: left;
-          display: inline-block;
-          border: 1px solid darkgrey;
-          border-radius: 3px;
-          width: 20px;
-          height: 20px;
-          margin: 2px;
-          padding: 0;
-      }
-      .days .day.x{
-          background-color: green;
-      }
-      .days .day.o{
-          background-color: lightgray;
-      }
+        .days {
+            width: 100%;
+        }
 
-      .days .day:nth-child(7) {
-          background-color: #5bc0de;
-      }
-      .days .day:nth-child(14) {
-          background-color: #5bc0de;
-      }
+        .days .day {
+            float: left;
+            display: inline-block;
+            border: 1px solid darkgrey;
+            border-radius: 3px;
+            width: 20px;
+            height: 20px;
+            margin: 2px;
+            padding: 0;
+        }
 
-      .days .day:nth-child(21) {
-          background-color: #2e6da4;
-      }
-    
-      .days .day:nth-child(36) {
-          background-color: #5bc0de;
-      }
-.days .day:nth-child(43) {
-          background-color: #5bc0de;
-}
-.days .day:nth-child(50) {
-          background-color: #5bc0de;
-      }
-    
+        .days .day.x {
+            background-color: green;
+        }
 
-    
+        .days .day.o {
+            background-color: lightgray;
+        }
 
-      .container {
-          max-width: 780px;
-      }
+        .days .day:nth-child(7) {
+            background-color: #5bc0de;
+        }
 
-  </style>
+        .days .day:nth-child(14) {
+            background-color: #5bc0de;
+        }
+
+        .days .day:nth-child(21) {
+            background-color: #2e6da4;
+        }
+
+        .days .day:nth-child(36) {
+            background-color: #5bc0de;
+        }
+
+        .days .day:nth-child(43) {
+            background-color: #5bc0de;
+        }
+
+        .days .day:nth-child(50) {
+            background-color: #5bc0de;
+        }
+
+
+        .container {
+            max-width: 780px;
+        }
+
+    </style>
 
 </head>
 <body>
 <div id="vue-app" class="container">
-  <h1>8 weeks, {{daysLast}} {{progress}}</h1>
-  <progress id="file" max="100" :value="progress" style="width:100%;  max-width: 780px"> 70% </progress>
+    <h1>{{daysLast}} {{progress}}</h1>
+    <progress id="file" max="100" :value="progress" style="width:100%;  max-width: 780px"> 70%</progress>
 
-  <div class="days">
-    <div class="day" :class="day" v-for="day in days"></div>
-  </div>
-
-  <div id="progress">
-    <div class="progress-container" :style="{ width: totalC + 'px' }">
-      <div class="payed" :style="{ width: payedC.px + 'px' }">{{payedC.p}}</div>
-      <div class="reserved" :style="{ width: reservedC.px + 'px' }">{{reservedC.p}}</div>
-      <div class="rest" :style="{ width: (totalC - reservedC.px - payedC.px) + 'px' }">{{parseFloat(100 - total).toFixed(1)}}</div>
+    <div class="days">
+        <div class="day" :class="day" v-for="day in days"></div>
     </div>
-    {{total}}
-  </div>
-  <br>
 
-  <textarea v-model="payed" rows="10" cols="20"></textarea>
-  <textarea v-model="reserved" rows="10" cols="20"></textarea>
-  <br>
-  {{sumAmount}}
-  <br>
-  {{target - sumAmount}}
+    <div id="progress">
+        <div class="progress-container" :style="{ width: totalC + 'px' }">
+            <div class="payed" :style="{ width: payedC.px + 'px' }">{{payedC.p}}</div>
+            <div class="reserved" :style="{ width: reservedC.px + 'px' }">{{reservedC.p}}</div>
+            <div class="rest" :style="{ width: (totalC - reservedC.px - payedC.px) + 'px' }">
+                {{parseFloat(100 - total).toFixed(1)}}
+            </div>
+        </div>
+        {{total}}
+    </div>
+    <br>
+
+    <textarea v-model="payed" rows="10" cols="20"></textarea>
+    <textarea v-model="reserved" rows="10" cols="20"></textarea>
+    <br>
+    {{sumAmount}}
+    <br>
+    {{target - sumAmount}}
 </div>
 
 <script src="js/vue.js"></script>

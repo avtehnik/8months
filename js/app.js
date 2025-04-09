@@ -50,10 +50,11 @@ new Vue({
         this.payed = window.localStorage.hasOwnProperty('payed') ? window.localStorage['payed'] : "";
 
 
-        var date1 = new Date("21/03/2025");
-        var date2 = new Date("21/06/2025");
-
+        let date1 = new Date("03/21/2025");
+        let date2 = new Date("06/21/2025");
+console.log(date1, date2);
         let calcP = ()=>{
+            console.log(1);
             let current = new Date();
             var totalDifference_In_Time = date2.getTime() - current.getTime();
             var totalDifference_In_Days =  Math.floor(totalDifference_In_Time / (1000 * 3600 * 24));
@@ -72,7 +73,7 @@ new Vue({
             let total = date2.getTime() - date1.getTime();
 
             let target =  current.getTime() - date1.getTime();
-            this.progress = ((target/total) * 100).toFixed(5);
+            this.progress = ((target/total) * 100).toFixed(2);
         }
 
         calcP();
