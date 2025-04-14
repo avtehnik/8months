@@ -51,7 +51,7 @@ new Vue({
 
 
         let date1 = new Date("03/21/2025");
-        let date2 = new Date("06/21/2025");
+        let date2 = new Date("05/23/2025");
 console.log(date1, date2);
         let calcP = ()=>{
             console.log(1);
