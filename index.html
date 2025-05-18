@@ -13,7 +13,7 @@
         }
 
         .container {
-            margin-top: 100px;
+            margin-top: 50px;
         }
 
         #progress {
@@ -23,22 +23,22 @@
             clear: both;
         }
 
-        #progress .progress-container {
+        .progress-container {
             height: 20px;
             border: 1px solid black;
             flex-direction: row;
             display: flex;
         }
 
-        #progress .payed {
+        .progress-container .payed {
             background-color: #5cb85c;
         }
 
-        #progress .reserved {
+        .progress-container .reserved {
             background-color: yellow;
         }
 
-        #progress .rest {
+        .progress-container .rest {
             background-color: rgba(0, 72, 255, 0.66);
         }
 
@@ -98,32 +98,64 @@
 
 </head>
 <body>
+
+
+<script type="text/x-template" id="property-template">
+    <div class="days">
+        <h2>{{iname}}</h2>
+        <div>
+            <div>
+                <div class="progress-container" style="width:100%">
+                    <div class="payed" :style="{ width: payedInterest + '%' }">{{payedInterest}}</div>
+                    <div class="rest" :style="{ width: (100 -  payedInterest) + '%' }">
+                        {{100 - payedInterest}}
+                    </div>
+                </div>
+                {{total}}
+            </div>
+        </div>
+        <div>
+            <textarea v-model="iready" rows="10" cols="20" @keyup="change"></textarea>
+        </div>
+        <input  @keyup="change" v-model="iname" >
+        <input  @keyup="change" type="number" v-model="itarget" >
+    </div>
+
+</script>
+
 <div id="vue-app" class="container">
-    <h1>{{daysLast}} {{progress}}</h1>
+    <h1>{{daysLast}} {{progress}}%</h1>
     <progress id="file" max="100" :value="progress" style="width:100%;  max-width: 780px"> 70%</progress>
 
     <div class="days">
         <div class="day" :class="day" v-for="day in days"></div>
     </div>
-
-    <div id="progress">
-        <div class="progress-container" :style="{ width: totalC + 'px' }">
-            <div class="payed" :style="{ width: payedC.px + 'px' }">{{payedC.p}}</div>
-            <div class="reserved" :style="{ width: reservedC.px + 'px' }">{{reservedC.p}}</div>
-            <div class="rest" :style="{ width: (totalC - reservedC.px - payedC.px) + 'px' }">
-                {{parseFloat(100 - total).toFixed(1)}}
+    <br>
+    <div>
+        <div class="progress-container" style="width:100%">
+            <div class="payed" :style="{ width: payedInterest + '%' }">{{payedInterest}}</div>
+            <div class="reserved" :style="{ width: reservedInterest + '%' }">{{reservedInterest}}</div>
+            <div class="rest" :style="{ width: (100 - reservedInterest - payedInterest) + '%' }">
+                {{100 - reservedInterest - payedInterest}}
             </div>
         </div>
-        {{total}}
+        total {{getTotal()}}
+    </div>
+    <textarea v-model="reserved" rows="10" cols="20" @keyup="change"></textarea>
+    <div v-for="property in properties">
+        <property-counter
+                v-bind:start="property.start"
+                v-bind:end="property.end"
+                v-bind:code="property.code"
+                v-bind:name="property.name"
+                v-bind:target="property.target"
+                v-bind:ready="property.ready"
+                v-bind:available="property.available"
+        ></property-counter>
     </div>
     <br>
-
-    <textarea v-model="payed" rows="10" cols="20"></textarea>
-    <textarea v-model="reserved" rows="10" cols="20"></textarea>
     <br>
-    {{sumAmount}}
     <br>
-    {{target - sumAmount}}
 </div>
 
 <script src="js/vue.js"></script>

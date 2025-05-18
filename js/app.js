@@ -13,51 +13,74 @@ const cyrb53 = (str, seed = 0) => {
     return 4294967296 * (2097151 & h2) + (h1 >>> 0);
 };
 
+function interest(a, b) {
+    return parseFloat(((a / b) * 100).toFixed(2));
+}
 
-new Vue({
-    el: '#vue-app',
-    data: {
-        target: 2,
-        payed: "",
-        reserved: "",
-        days: [],
-        daysLast: 0,
-        progress: 0
-    },
-    methods: {
-        getPayed: function() {
-            let a = this.payed.split("\n").reduce(function(a, b) {
-                let intA = parseInt(a) || 0;
-                let intB = parseInt(b) || 0;
-                return intA + intB;
-            }, 0)
-            return a;
-        },
-        getReserved: function() {
-            let a = this.reserved.split("\n").reduce(function(a, b) {
-                let intA = parseInt(a) || 0;
-                let intB = parseInt(b) || 0;
-                return intA + intB;
-            }, 0);
-            return a;
-        },
-        precent: function(a, b) {
-            return ((a / b) * 100).toFixed(2)
+function listSum(list) {
+    let a = list.split("\n").reduce(function (a, b) {
+        return (parseInt(a) || 0) + (parseInt(b) || 0);
+    }, 0);
+    return a;
+}
+
+
+function getStorage(obj) {
+    let value = JSON.parse(window.localStorage.hasOwnProperty('prop-' + obj.code) ? window.localStorage['prop-' + obj.code] : "{}");
+    obj.name = value['name'] || "";
+    obj.ready = value['ready'] || "";
+    obj.target = value['target'] || 0;
+}
+
+function setStorage(obj) {
+    window.localStorage['prop-' + obj.code] = JSON.stringify(obj)
+}
+
+
+Vue.component('property-counter', {
+    props: ['start', 'end', 'code', 'name', 'target', 'ready'],
+    data: function () {
+        return {
+            iavailable: this.available,
+            iready: this.ready,
+            iname: this.name,
+            itarget: this.target,
+            icode: this.code
         }
     },
+    methods: {
+        getPayed: function () {
+            return listSum(this.iready);
+        },
+        change: function (e) {
+            this.$root.$emit('change', {
+                'code': this.icode,
+                'ready': this.iready,
+                'name': this.iname,
+                'target': this.itarget
+            });
+        }
+    },
+    computed: {
+        payedInterest: function () {
+            let a = this.getPayed()
+            return interest(a, this.target);
+        },
+        total: function () {
+            return this.getPayed();
+        },
+    },
     beforeMount() {
-        this.reserved = window.localStorage.hasOwnProperty('reserved') ? window.localStorage['reserved'] : "";
-        this.payed = window.localStorage.hasOwnProperty('payed') ? window.localStorage['payed'] : "";
 
 
-        let date1 = new Date("03/21/2025");
-        let date2 = new Date("06/21/2025");
-console.log(date1, date2);
-        let calcP = ()=>{
+        let date1 = new Date(this.start);
+        let date2 = new Date(this.end);
+        // console.log(date1, date2);
+        let calcP = () => {
             console.log(1);
             let current = new Date();
             var totalDifference_In_Time = date2.getTime() - current.getTime();
-            var totalDifference_In_Days =  Math.floor(totalDifference_In_Time / (1000 * 3600 * 24));
+            var totalDifference_In_Days = Math.floor(totalDifference_In_Time / (1000 * 3600 * 24));
             var difference_In_Time = current.getTime() - date1.getTime();
             var difference_In_Days = Math.floor(difference_In_Time / (1000 * 3600 * 24));
 
@@ -66,49 +89,138 @@ console.log(date1, date2);
             this.daysLast = totalDifference_In_Days
 
             let a = new Array(difference_In_Days + totalDifference_In_Days);
-            a.fill("x",0, difference_In_Days )
-            a.fill("o", difference_In_Days, totalDifference_In_Days + difference_In_Days )
+            a.fill("x", 0, difference_In_Days)
+            a.fill("o", difference_In_Days, totalDifference_In_Days + difference_In_Days)
 
             this.days = a;
             let total = date2.getTime() - date1.getTime();
 
-            let target =  current.getTime() - date1.getTime();
-            this.progress = ((target/total) * 100).toFixed(2);
+            let target = current.getTime() - date1.getTime();
+            this.progress = ((target / total) * 100).toFixed(2);
+        }
+    },
+    template: '#property-template'
+})
+
+
+new Vue({
+    el: '#vue-app',
+    data: {
+        days: [],
+        reserved: 0,
+        properties: [
+            {start: "04/23/2025", end: "04/23/2027", code: "p", target: 4.5, ready: "0"},
+            {start: "04/23/2025", end: "04/23/2027", code: "f", target: 20, ready: "0"},
+            {start: "04/23/2025", end: "04/23/2027", code: "s", target: 80, ready: "0"},
+        ],
+        daysLast: 0,
+        payed: 0,
+        progress: 0
+    },
+    methods: {
+        getReady: function () {
+            return this.properties.reduce((a, b) => {
+                return a + listSum(b.ready);
+            }, 0);
+        },
+        change: function (e) {
+            this.reserved = window.localStorage['reserved'] = this.reserved;
+        },
+        getPayed: function () {
+            let a = this.payed.split("\n").reduce(function (a, b) {
+                let intA = parseInt(a) || 0;
+                let intB = parseInt(b) || 0;
+                return intA + intB;
+            }, 0)
+            return a;
+        },
+        getReserved: function () {
+            return 2;
+        },
+        getTotal: function () {
+            let total = this.properties.reduce((a, b) => {
+                return parseInt(a) + parseInt(b.ready);
+            }, 0);
+            return total;
+        },
+        getTarget: function () {
+            let total = this.properties.reduce((a, b) => {
+                return parseInt(a) + parseInt(b.target);
+            }, 0);
+            return total;
+        },
+    },
+    created() {
+        this.$root.$on('change', (obj) => {
+            console.log(obj.code);
+            this.properties.map( p => {
+                if (p.code === obj.code) {
+                    p.ready = obj.ready;
+                    p.name = obj.name;
+                    p.target = obj.target;
+                }
+            });
+            setStorage(obj)
+        })
+        this.properties.forEach(p => {
+            getStorage(p);
+        });
+
+
+    },
+    beforeMount() {
+        this.reserved = window.localStorage.hasOwnProperty('reserved') ? window.localStorage['reserved'] : "";
+        let date1 = new Date("04/23/2025");
+        let date2 = new Date("04/23/2027");
+        // console.log(date1, date2);
+        let calcP = () => {
+            console.log(1);
+            let current = new Date();
+            var totalDifference_In_Time = date2.getTime() - current.getTime();
+            var totalDifference_In_Days = Math.floor(totalDifference_In_Time / (1000 * 3600 * 24));
+            var difference_In_Time = current.getTime() - date1.getTime();
+            var difference_In_Days = Math.floor(difference_In_Time / (1000 * 3600 * 24));
+
+            //To display the final no. of days (result)
+            console.log(totalDifference_In_Days, difference_In_Days);
+            this.daysLast = totalDifference_In_Days
+
+            let a = new Array(difference_In_Days + totalDifference_In_Days);
+            a.fill("x", 0, difference_In_Days)
+            a.fill("o", difference_In_Days, totalDifference_In_Days + difference_In_Days)
+
+            this.days = a;
+            let total = date2.getTime() - date1.getTime();
+
+            let target = current.getTime() - date1.getTime();
+            this.progress = ((target / total) * 100).toFixed(2);
         }
 
         calcP();
-        setInterval(calcP,1000)
     },
     computed: {
-        total: function() {
-            let p = this.getPayed();
-            let r = this.getReserved();
-            console.log(p,r);
-            console.log(this.precent(p , this.target),this.precent( r, this.target));
-            return this.precent(p + r, this.target);
+        total: function () {
+            let total = this.properties.reduce((a, b) => {
+                return parseInt(a) + parseInt(b.ready);
+            }, 0);
+            return total;
         },
-        payedC: function() {
-            window.localStorage['payed'] = this.payed;
-            let a = this.getPayed()
-            let p = this.precent(a, this.target);
-            return { px: p * 5, p};
+        target: function () {
+            let total = this.properties.reduce((a, b) => {
+                return parseInt(a) + parseInt(b.target);
+            }, 0);
+            return total;
         },
-        reservedC: function() {
-            window.localStorage['reserved'] = this.reserved;
-            let a = this.getReserved();
-
-            let p = this.precent(a, this.target);
-            return { px: p * 5, p};
+        payedInterest: function () {
+            let a = this.getReady()
+            let p = interest(a, this.target);
+            return p;
         },
-        totalC: function() {
-            // this.target
-            let p = this.precent(this.target, this.target);
-            return p * 5;
+        reservedInterest: function () {
+            let a = listSum(this.reserved);
+            let p = interest(a, this.target);
+            console.log(p);
+            return p;
         },
-        sumAmount: function(){
-            let p = this.getPayed();
-            let r = this.getReserved();
-            return p + r;
-        }
     }
 });
